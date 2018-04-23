@@ -1,0 +1,11 @@
+@import "./reset";
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+body {
+  -webkit-overflow-scrolling: auto;
+  overflow: scroll;
+  height: 100%;
+}
