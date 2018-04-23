@@ -6,7 +6,8 @@
     "debug": "meteor run --inspect-brk",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "kill": "kill -9 `ps ax | grep node | grep meteor | awk '{print $1}'`"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
