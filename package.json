@@ -38,5 +38,35 @@
       "server": "server/main.js"
     },
     "testModule": "test/main.js"
+  },
+  "babel": {
+    "plugins": [
+      "react-loadable/babel",
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
+    ]
+  },
+  "browserslist": [
+    "> 1%",
+    "Android >= 4.4",
+    "IE >= 11",
+    "Firefox ESR"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "standard-jsx"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
+    "rules": {
+      "jsx-quotes": 0
+    }
   }
 }
