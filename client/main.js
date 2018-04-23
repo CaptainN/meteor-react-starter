@@ -1,22 +1,23 @@
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import './service-worker'
 
-import './main.html';
+import { onPageLoad } from 'meteor/server-render'
+import React from 'react'
+import Loadable from 'react-loadable'
+import { hydrate } from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
+h = React.createElement // eslint-disable-line
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
+onPageLoad(async sink => {
+  let App = (await import('/imports/App')).default
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});
+  if (window.__preloadables__) {
+    await Loadable.preloadablesReady(window.__preloadables__)
+    delete window.__preloadables__
+  }
+
+  hydrate(
+    <BrowserRouter><App /></BrowserRouter>,
+    document.getElementById('root')
+  )
+})
