@@ -16,7 +16,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-helmet": "^5.2.0",
+    "react-helmet-async": "0.0.5",
     "react-loadable": "git+https://github.com/CaptainN/react-loadable.git",
     "react-router-dom": "^4.2.2"
   },
