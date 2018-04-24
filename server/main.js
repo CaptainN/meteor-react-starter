@@ -4,9 +4,11 @@ import './browser-policy'
 import { WebApp } from 'meteor/webapp'
 import React from 'react'
 import { StaticRouter } from 'react-router'
-import { renderToString } from 'react-dom/server'
+import { renderToNodeStream } from 'react-dom/server'
 import { onPageLoad } from 'meteor/server-render'
 import Loadable from 'react-loadable'
+import s2s from 'string-to-stream'
+import sq from 'streamqueue'
 import { HelmetProvider } from 'react-helmet-async'
 import App from '/imports/App'
 
@@ -17,6 +19,7 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
   const modules = []
   const modulesResolved = []
   const helmetContext = {}
+
   const app = <HelmetProvider context={helmetContext}>
     <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
       reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
@@ -25,19 +28,24 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
       </StaticRouter>
     </Loadable.Capture>
   </HelmetProvider>
-  sink.renderIntoElementById('root', renderToString(app))
-  sink.appendToBody(`<script> var __preloadables__ = ${JSON.stringify(modulesResolved)}; </script>`)
 
-  const { helmet } = helmetContext
-  sink.appendToHead(helmet.meta.toString())
-  sink.appendToHead(helmet.title.toString())
-  sink.appendToHead(helmet.link.toString())
+  const appStream = renderToNodeStream(app)
+  const queuedStreams = sq(
+    () => appStream,
+    () => s2s(`<script id="__preloadables__">__preloadables__=${JSON.stringify(modulesResolved)};</script>`)
+  )
+  sink.renderIntoElementById('root', queuedStreams)
 
-  WebApp.addHtmlAttributeHook(() => (
-    Object.assign({
-      lang: 'en'
-    }, helmet.htmlAttributes.toComponent())
-  ))
+  // const { helmet } = helmetContext
+  // sink.appendToHead(helmet.meta.toString())
+  // sink.appendToHead(helmet.title.toString())
+  // sink.appendToHead(helmet.link.toString())
+
+  // WebApp.addHtmlAttributeHook(() => (
+  //   Object.assign({
+  //     lang: 'en'
+  //   }, helmet.htmlAttributes.toComponent())
+  // ))
 
   // :TODO: Figure out how to do helmet.bodyAttributes...
 }))

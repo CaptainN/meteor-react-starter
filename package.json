@@ -18,7 +18,9 @@
     "react-dom": "^16.3.1",
     "react-helmet-async": "0.0.5",
     "react-loadable": "git+https://github.com/CaptainN/react-loadable.git",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "streamqueue": "^1.1.2",
+    "string-to-stream": "^1.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

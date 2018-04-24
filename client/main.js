@@ -14,6 +14,9 @@ onPageLoad(async sink => {
 
   if (window.__preloadables__) {
     await Loadable.preloadablesReady(window.__preloadables__)
+    // remove the __preloadables__ DOM script node
+    const script = document.getElementById('__preloadables__')
+    script.parentNode.removeChild(script)
   }
 
   const helmetContext = {}
