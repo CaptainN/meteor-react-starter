@@ -10,7 +10,7 @@
     "kill": "kill -9 `ps ax | grep node | grep meteor | awk '{print $1}'`"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.42",
+    "@babel/runtime": "^7.0.0-beta.49",
     "bcrypt": "^2.0.0",
     "meteor-node-stubs": "^0.3.2",
     "prop-types": "^15.6.1",
