@@ -4,6 +4,7 @@ accounts-oauth@1.1.15
 accounts-password@1.5.1
 alanning:roles@1.2.16
 allow-deny@1.1.0
+apollo@2.0.0
 appcache@1.2.0
 audit-argument-checks@1.0.7
 autoupdate@1.4.1
