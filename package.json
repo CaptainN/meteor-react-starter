@@ -10,27 +10,30 @@
     "kill": "kill -9 `ps ax | grep node | grep meteor | awk '{print $1}'`"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.42",
-    "bcrypt": "^2.0.0",
-    "meteor-node-stubs": "^0.3.2",
-    "prop-types": "^15.6.1",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-helmet-async": "0.0.5",
+    "@babel/runtime": "^7.0.0-beta.54",
+    "bcrypt": "^3.0.0",
+    "meteor-node-stubs": "^0.4.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-helmet-async": "0.1.0-alpha",
     "react-loadable": "git+https://github.com/CaptainN/react-loadable.git",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0-beta.54",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0-beta.54",
+    "babel-eslint": "8.2.6",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "eslint": "^4.19.1",
+    "eslint": "^5.1.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-jsx": "^5.0.0",
-    "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-react": "^7.7.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-standard": "^3.1.0"
   },
   "meteor": {
     "mainModule": {
@@ -41,6 +44,8 @@
   },
   "babel": {
     "plugins": [
+      "@babel/plugin-proposal-optional-chaining",
+      "@babel/plugin-proposal-do-expressions",
       "react-loadable/babel",
       [
         "transform-react-jsx",
