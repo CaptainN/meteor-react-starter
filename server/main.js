@@ -1,3 +1,4 @@
+import './apollo'
 import './appcache'
 import './browser-policy'
 
