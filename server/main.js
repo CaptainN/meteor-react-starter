@@ -1,4 +1,4 @@
-import './apollo'
+import { schema } from './apollo'
 // import './appcache'
 import './browser-policy'
 
@@ -14,7 +14,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { withClientState } from 'apollo-link-state'
 import { from } from 'apollo-link'
 import { SchemaLink } from 'apollo-link-schema'
-import { schema } from '/imports/api/apollo/schema'
 import { resolvers } from '/imports/api/apollo/resolvers'
 import App from '/imports/App'
 
@@ -63,6 +62,7 @@ Loadable.preloadAll().then(() => onPageLoad(async sink => {
         </Loadable.Capture>
       </HelmetProvider>
     </ApolloProvider>
+
     const content = await renderToStringWithData(app)
     sink.renderIntoElementById('root', content)
     sink.appendToBody(`<script id="__preloadables__">__preloadables__=${JSON.stringify(modulesResolved)}</script>`)
