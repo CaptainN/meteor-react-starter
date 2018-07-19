@@ -1,3 +1,4 @@
+import './apollo'
 import './service-worker'
 
 import { onPageLoad } from 'meteor/server-render'
