@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import Helmet from 'react-helmet-async'
+import { Helmet } from 'react-helmet-async'
 
 class MainLayout extends Component {
   static propTypes = {
