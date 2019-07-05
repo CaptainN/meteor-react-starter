@@ -26,4 +26,5 @@ tracker@1.2.0
 alanning:roles
 fourseven:scss
 ground:db
+npdev:collections
 seba:minifiers-autoprefixer

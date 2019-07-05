@@ -10,7 +10,7 @@
     "kill": "kill -9 `ps ax | grep node | grep meteor | awk '{print $1}'`"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime": "^7.5.0",
     "bcrypt": "^3.0.6",
     "meteor-node-stubs": "^0.4.1",
     "prop-types": "^15.7.2",
@@ -21,8 +21,8 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-do-expressions": "^7.2.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-do-expressions": "^7.5.0",
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "babel-eslint": "10.0.2",
