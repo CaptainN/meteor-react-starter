@@ -10,7 +10,7 @@ import { renderToString } from 'react-dom/server'
 import { onPageLoad } from 'meteor/server-render'
 import Loadable from 'react-loadable'
 import { HelmetProvider } from 'react-helmet-async'
-import App from '/imports/App'
+import { App } from '/imports/App'
 
 h = React.createElement // eslint-disable-line
 
