@@ -16,6 +16,9 @@ import { App } from '/imports/App'
 h = React.createElement // eslint-disable-line
 
 Loadable.preloadAll().then(() => onPageLoad(sink => {
+  // if cookie sssr (skip server side rendering) is set, don't bother with ssr
+  if (sink.request.cookies.sssr) return
+
   const context = {}
   const modules = []
   const modulesResolved = []

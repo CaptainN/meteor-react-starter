@@ -1,5 +1,6 @@
 /* global Meteor */
 import './service-worker'
+import './sssr-cookie'
 
 import { onPageLoad } from 'meteor/server-render'
 import React from 'react'
