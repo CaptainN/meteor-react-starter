@@ -1,5 +1,6 @@
 import './appcache'
 import './browser-policy'
+import './fixtures'
 
 import { WebApp } from 'meteor/webapp'
 import React from 'react'
