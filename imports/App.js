@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor'
-import { useTracker } from 'meteor/react-meteor-data'
+import { useTracker } from 'meteor/npdev:collections'
 import { Component } from 'react'
 import Loadable from 'react-loadable'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Loading from './ui/common/Loading'
 
 const MainLayout = Loadable({
@@ -20,6 +20,11 @@ const ForgotPassword = Loadable({
 
 const NotFound = Loadable({
   loader: () => import('./ui/common/NotFound'),
+  loading: Loading
+})
+
+const Page = Loadable({
+  loader: () => import('./ui/pages/Page'),
   loading: Loading
 })
 
@@ -75,9 +80,14 @@ export const App = (props) => {
     <PrivateRoute path="/admin" render={(props) => (
       <AdminApp {...props} />
     )} />
+    <Route path="/pages/:slug" render={(props) => (
+      <MainLayout {...props}>
+        <Page slug={props.match.params.slug} />
+      </MainLayout>
+    )} />
     <Route path="/" render={(props) => (
       <MainLayout {...props}>
-        <div>Home Page</div>
+        <div>Home Page &nbsp;|&nbsp; <Link to="/pages/about-us">About Us</Link></div>
       </MainLayout>
     )} />
     <Route render={(props) => (
