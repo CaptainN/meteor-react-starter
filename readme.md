@@ -1,7 +1,9 @@
 Meteor React Starter
 ====================
 
-This is my starter. It contains all the necessary components to acheive the desired feature set, with some boilerplate to implement those settings.
+This is my starter. It contains all the necessary components to achieve the desired feature set, with some boilerplate to implement those settings.
+
+It also demonstrates how to use and set up [NPDev:Collections](https://github.com/CaptainN/npdev-collections), and easy way to create and wire up offline-first collections with transparent SSR and data over methods.
 
 Features
 --------
