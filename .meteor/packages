@@ -18,12 +18,14 @@ force-ssl@1.1.0
 meteor-base@1.4.0
 mongo@1.6.2
 react-meteor-data
-standard-minifier-js@2.4.1
 server-render@0.3.1
+standard-minifier-js@2.4.1
 static-html
 tracker@1.2.0
 
 alanning:roles
+aldeed:collection2
+aldeed:simple-schema
 fourseven:scss
 ground:db
 npdev:collections
