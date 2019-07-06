@@ -8,6 +8,7 @@ import React from 'react'
 import { StaticRouter } from 'react-router'
 import { renderToString } from 'react-dom/server'
 import { onPageLoad } from 'meteor/server-render'
+import { DataCaptureProvider } from 'meteor/npdev:collections'
 import Loadable from 'react-loadable'
 import { HelmetProvider } from 'react-helmet-async'
 import { App } from '/imports/App'
@@ -19,16 +20,20 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
   const modules = []
   const modulesResolved = []
   const helmetContext = {}
-  const app = <HelmetProvider context={helmetContext}>
-    <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
-      reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
-      <StaticRouter location={sink.request.url} context={context}>
-        <App />
-      </StaticRouter>
-    </Loadable.Capture>
-  </HelmetProvider>
+  const dataHandle = {}
+  const app = <DataCaptureProvider handle={dataHandle}>
+    <HelmetProvider context={helmetContext}>
+      <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
+        reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
+        <StaticRouter location={sink.request.url} context={context}>
+          <App />
+        </StaticRouter>
+      </Loadable.Capture>
+    </HelmetProvider>
+  </DataCaptureProvider>
   sink.renderIntoElementById('root', renderToString(app))
   sink.appendToBody(`<script> var __preloadables__ = ${JSON.stringify(modulesResolved)}; </script>`)
+  sink.appendToBody(dataHandle.toScriptTag())
 
   const { helmet } = helmetContext
   sink.appendToHead(helmet.meta.toString())

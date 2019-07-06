@@ -1,3 +1,4 @@
+/* global Meteor */
 import './service-worker'
 
 import { onPageLoad } from 'meteor/server-render'
@@ -6,6 +7,7 @@ import Loadable from 'react-loadable'
 import { HelmetProvider } from 'react-helmet-async'
 import { hydrate } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+import { DataHydrationProvider, hydrateData } from 'meteor/npdev:collections'
 
 h = React.createElement // eslint-disable-line
 
@@ -16,13 +18,18 @@ onPageLoad(async sink => {
     await Loadable.preloadablesReady(window.__preloadables__)
   }
 
+  hydrateData()
+
   const helmetContext = {}
+  const hydrationHandle = { isHydrating: !Meteor.userId() }
   hydrate(
-    <HelmetProvider context={helmetContext}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>,
+    <DataHydrationProvider handle={hydrationHandle}>
+      <HelmetProvider context={helmetContext}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </DataHydrationProvider>,
     document.getElementById('root')
   )
 })
