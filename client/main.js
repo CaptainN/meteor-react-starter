@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom'
 h = React.createElement // eslint-disable-line
 
 onPageLoad(async sink => {
-  let App = (await import('/imports/App')).default
+  let { App } = (await import('/imports/App'))
 
   if (window.__preloadables__) {
     await Loadable.preloadablesReady(window.__preloadables__)
