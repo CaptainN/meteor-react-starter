@@ -10,7 +10,7 @@
     "kill": "kill -9 `ps ax | grep node | grep meteor | awk '{print $1}'`"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime": "^7.5.4",
     "bcrypt": "^3.0.6",
     "meteor-node-stubs": "^0.4.1",
     "prop-types": "^15.7.2",
@@ -22,14 +22,14 @@
     "simpl-schema": "^1.5.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-do-expressions": "^7.2.0",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-do-expressions": "^7.5.0",
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "babel-eslint": "10.0.2",
     "eslint": "^6.0.1",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-config-standard-jsx": "^6.0.2",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-config-standard-jsx": "^7.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-node": "^9.1.0",
