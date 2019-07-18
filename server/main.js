@@ -3,7 +3,6 @@ import './browser-policy'
 import './fixtures'
 import './connectors'
 
-import { WebApp } from 'meteor/webapp'
 import React from 'react'
 import { StaticRouter } from 'react-router'
 import { renderToNodeStream } from 'react-dom/server'
