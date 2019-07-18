@@ -50,6 +50,7 @@ const PrivateRoute = ({ render, ...props }) => {
 // on the server.
 const LateLoadable = (config) => class extends Component {
   loadable = Loadable(config)
+
   render () {
     return <this.loadable {...this.props} />
   }
