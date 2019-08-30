@@ -5,7 +5,8 @@ import './connectors'
 
 import React from 'react'
 import { StaticRouter } from 'react-router'
-import { renderToNodeStream } from 'react-dom/server'
+import { renderToNodeStream, renderToStaticMarkup } from 'react-dom/server'
+import { WebApp } from 'meteor/webapp'
 import { onPageLoad } from 'meteor/server-render'
 import { DataCaptureProvider } from 'meteor/npdev:collections'
 import Loadable from 'react-loadable'
@@ -25,35 +26,37 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
   const modulesResolved = []
   const helmetContext = {}
   const dataHandle = {}
-  const app = <DataCaptureProvider handle={dataHandle}>
-    <HelmetProvider context={helmetContext}>
-      <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
-        reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
-        <StaticRouter location={sink.request.url} context={context}>
-          <App />
-        </StaticRouter>
-      </Loadable.Capture>
-    </HelmetProvider>
-  </DataCaptureProvider>
+  const app = <HelmetProvider context={helmetContext}>
+    <StaticRouter location={sink.request.url} context={context}>
+      <App />
+    </StaticRouter>
+  </HelmetProvider>
 
-  const appStream = renderToNodeStream(app)
-  const queuedStreams = sq(
-    () => appStream,
-    () => s2s(`<script id="__preloadables__">__preloadables__=${JSON.stringify(modulesResolved)};</script>`),
-    () => s2s(dataHandle.toScriptTag())
-  )
-  sink.renderIntoElementById('root', queuedStreams)
+  // Grab various data from the tree (technique from Apollo's getDataFromTree)
+  renderToStaticMarkup(<DataCaptureProvider handle={dataHandle}>
+    <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
+      reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
+      {app}
+    </Loadable.Capture>
+  </DataCaptureProvider>)
 
-  // const { helmet } = helmetContext
-  // sink.appendToHead(helmet.meta.toString())
-  // sink.appendToHead(helmet.title.toString())
-  // sink.appendToHead(helmet.link.toString())
+  WebApp.addHtmlAttributeHook(() => (
+    Object.assign({
+      lang: 'en'
+    }, helmet.htmlAttributes.toComponent())
+  ))
 
-  // WebApp.addHtmlAttributeHook(() => (
-  //   Object.assign({
-  //     lang: 'en'
-  //   }, helmet.htmlAttributes.toComponent())
-  // ))
+  const { helmet } = helmetContext
+  sink.appendToHead(helmet.meta.toString())
+  sink.appendToHead(helmet.title.toString())
+  sink.appendToHead(helmet.link.toString())
 
   // :TODO: Figure out how to do helmet.bodyAttributes...
+
+  const queuedStreams = sq(
+    () => s2s(`<script id="__preloadables__">__preloadables__=${JSON.stringify(modulesResolved)};</script>`),
+    () => s2s(dataHandle.toScriptTag()),
+    () => renderToNodeStream(app)
+  )
+  sink.renderIntoElementById('root', queuedStreams)
 }))
