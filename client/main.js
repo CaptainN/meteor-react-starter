@@ -23,7 +23,6 @@ onPageLoad(async sink => {
 
   // finish waiting
   await promisables
-  return
 
   const helmetContext = {}
   const hydrationHandle = { isHydrating: !Meteor.userId() }

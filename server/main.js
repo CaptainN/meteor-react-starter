@@ -5,7 +5,7 @@ import './connectors'
 
 import React from 'react'
 import { StaticRouter } from 'react-router'
-import { renderToNodeStream, renderToStaticMarkup } from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import { WebApp } from 'meteor/webapp'
 import { onPageLoad } from 'meteor/server-render'
 import { DataCaptureProvider } from 'meteor/npdev:collections'
@@ -31,8 +31,12 @@ preloadAllLoadables().then(() => onPageLoad(sink => {
     </StaticRouter>
   </HelmetProvider>
 
-  // Grab various data from the tree (technique from Apollo's getDataFromTree)
-  renderToStaticMarkup(<DataCaptureProvider handle={dataHandle}>
+  // Grab various data from the tree. We are rendering to string because
+  // renderToNodeStream causes problems with Mongo. It's only slightly
+  // less efficient than renderToStaticMarkup (which is what Apollo uses
+  // by default), and we get to skip the second pass with
+  // renderToNodeStream anyway - bonus!
+  const html = renderToString(<DataCaptureProvider handle={dataHandle}>
     <LoadableCaptureProvider handle={loadableHandle}>
       {app}
     </LoadableCaptureProvider>
@@ -51,8 +55,10 @@ preloadAllLoadables().then(() => onPageLoad(sink => {
 
   // :TODO: Figure out how to do helmet.bodyAttributes...
 
+  // Since we have already rendered to string, is this more efficient than
+  // just writing to sink? I don't know yet...
   const queuedStreams = sq(
-    () => renderToNodeStream(app),
+    () => s2s(html),
     () => s2s(loadableHandle.toScriptTag()),
     () => s2s(dataHandle.toScriptTag())
   )
