@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { useTracker } from 'meteor/npdev:collections'
 import { Component } from 'react'
-import Loadable from 'react-loadable'
+import { Loadable } from 'meteor/npdev:react-loadable'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Loading from './ui/common/Loading'
 
