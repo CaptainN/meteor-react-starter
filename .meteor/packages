@@ -29,4 +29,5 @@ aldeed:simple-schema
 fourseven:scss
 ground:db
 npdev:collections
+npdev:react-loadable
 seba:minifiers-autoprefixer

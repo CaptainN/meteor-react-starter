@@ -4,7 +4,7 @@ import './sssr-cookie'
 
 import { onPageLoad } from 'meteor/server-render'
 import React from 'react'
-import Loadable from 'react-loadable'
+import { preloadLoadables } from 'meteor/npdev:react-loadable'
 import { HelmetProvider } from 'react-helmet-async'
 import { hydrate } from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
@@ -15,14 +15,15 @@ h = React.createElement // eslint-disable-line
 onPageLoad(async sink => {
   import { App } from '/imports/App'
 
-  if (window.__preloadables__) {
-    await Loadable.preloadablesReady(window.__preloadables__)
-    // remove the __preloadables__ DOM script node
-    const script = document.getElementById('__preloadables__')
-    script.parentNode.removeChild(script)
-  }
+  // start to preload loadables
+  const promisables = preloadLoadables()
 
+  // hydrate the data while we are waiting
   hydrateData()
+
+  // finish waiting
+  await promisables
+  return
 
   const helmetContext = {}
   const hydrationHandle = { isHydrating: !Meteor.userId() }

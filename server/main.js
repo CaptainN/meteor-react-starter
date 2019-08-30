@@ -9,7 +9,7 @@ import { renderToNodeStream, renderToStaticMarkup } from 'react-dom/server'
 import { WebApp } from 'meteor/webapp'
 import { onPageLoad } from 'meteor/server-render'
 import { DataCaptureProvider } from 'meteor/npdev:collections'
-import Loadable from 'react-loadable'
+import { LoadableCaptureProvider, preloadAllLoadables } from 'meteor/npdev:react-loadable'
 import s2s from 'string-to-stream'
 import sq from 'streamqueue'
 import { HelmetProvider } from 'react-helmet-async'
@@ -17,13 +17,12 @@ import { App } from '/imports/App'
 
 h = React.createElement // eslint-disable-line
 
-Loadable.preloadAll().then(() => onPageLoad(sink => {
+preloadAllLoadables().then(() => onPageLoad(sink => {
   // if cookie sssr (skip server side rendering) is set, don't bother with ssr
   if (sink.request.cookies.sssr) return
 
   const context = {}
-  const modules = []
-  const modulesResolved = []
+  const loadableHandle = {}
   const helmetContext = {}
   const dataHandle = {}
   const app = <HelmetProvider context={helmetContext}>
@@ -34,10 +33,9 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
 
   // Grab various data from the tree (technique from Apollo's getDataFromTree)
   renderToStaticMarkup(<DataCaptureProvider handle={dataHandle}>
-    <Loadable.Capture report={(moduleName) => { modules.push(moduleName) }}
-      reportResolved={(resolvedModuleName) => { modulesResolved.push(resolvedModuleName) }}>
+    <LoadableCaptureProvider handle={loadableHandle}>
       {app}
-    </Loadable.Capture>
+    </LoadableCaptureProvider>
   </DataCaptureProvider>)
 
   WebApp.addHtmlAttributeHook(() => (
@@ -54,9 +52,9 @@ Loadable.preloadAll().then(() => onPageLoad(sink => {
   // :TODO: Figure out how to do helmet.bodyAttributes...
 
   const queuedStreams = sq(
-    () => s2s(`<script id="__preloadables__">__preloadables__=${JSON.stringify(modulesResolved)};</script>`),
-    () => s2s(dataHandle.toScriptTag()),
-    () => renderToNodeStream(app)
+    () => renderToNodeStream(app),
+    () => s2s(loadableHandle.toScriptTag()),
+    () => s2s(dataHandle.toScriptTag())
   )
   sink.renderIntoElementById('root', queuedStreams)
 }))

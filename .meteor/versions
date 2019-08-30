@@ -69,6 +69,7 @@ mongo-decimal@0.1.1
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
 npdev:collections@0.1.3
+npdev:react-loadable@1.0.0-beta.0
 npm-bcrypt@0.9.3
 npm-mongo@3.1.2
 oauth@1.2.8
