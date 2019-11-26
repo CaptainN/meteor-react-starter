@@ -7,7 +7,7 @@ import React from 'react'
 import { StaticRouter } from 'react-router'
 import { renderToString } from 'react-dom/server'
 import { WebApp } from 'meteor/webapp'
-import { onPageLoad } from 'meteor/server-render'
+import { FastRender } from 'meteor/staringatlights:fast-render'
 import { DataCaptureProvider } from 'meteor/npdev:collections'
 import { LoadableCaptureProvider, preloadAllLoadables } from 'meteor/npdev:react-loadable'
 import s2s from 'string-to-stream'
@@ -17,10 +17,7 @@ import { App } from '/imports/App'
 
 h = React.createElement // eslint-disable-line
 
-preloadAllLoadables().then(() => onPageLoad(sink => {
-  // if cookie sssr (skip server side rendering) is set, don't bother with ssr
-  if (sink.request.cookies.sssr) return
-
+preloadAllLoadables().then(() => FastRender.onPageLoad(sink => {
   const context = {}
   const loadableHandle = {}
   const helmetContext = {}

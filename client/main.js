@@ -1,8 +1,7 @@
 /* global Meteor */
 import './service-worker'
-import './sssr-cookie'
 
-import { onPageLoad } from 'meteor/server-render'
+import { FastRender } from 'meteor/staringatlights:fast-render'
 import React from 'react'
 import { preloadLoadables } from 'meteor/npdev:react-loadable'
 import { HelmetProvider } from 'react-helmet-async'
@@ -12,7 +11,7 @@ import { DataHydrationProvider, hydrateData } from 'meteor/npdev:collections'
 
 h = React.createElement // eslint-disable-line
 
-onPageLoad(async sink => {
+FastRender.onPageLoad(async sink => {
   import { App } from '/imports/App'
 
   // start to preload loadables
