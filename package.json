@@ -45,7 +45,12 @@
       "client": "client/main.js",
       "server": "server/main.js"
     },
-    "testModule": "test/main.js"
+    "testModule": "test/main.js",
+    "nodeModules": {
+      "recompile": {
+        "simpl-schema": "legacy"
+      }
+    }
   },
   "babel": {
     "plugins": [
