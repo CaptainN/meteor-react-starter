@@ -45,18 +45,7 @@ const PrivateRoute = ({ render, ...props }) => {
   } />
 }
 
-// We specifically want to delay the creation of the Loadable
-// object, because we don't want it to register to preload
-// on the server.
-const LateLoadable = (config) => class extends Component {
-  loadable = Loadable(config)
-
-  render () {
-    return <this.loadable {...this.props} />
-  }
-}
-
-const AdminApp = LateLoadable({
+const AdminApp = Loadable({
   loader: () => import('./ui/admin/AdminApp'),
   loading: Loading
 })
