@@ -1,8 +1,8 @@
 import { check } from 'meteor/check'
-import { createListHook } from 'meteor/npdev:collections'
+import { createConnector } from 'meteor/npdev:collections'
 import { Pages } from '../collections/pages'
 
-export const usePage = createListHook({
+export const usePage = createConnector({
   name: 'page',
   collection: Pages,
   validate ({ slug }) {
