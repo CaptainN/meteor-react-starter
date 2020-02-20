@@ -1,4 +1,3 @@
-import './appcache'
 import './browser-policy'
 import './fixtures'
 import './connectors'
