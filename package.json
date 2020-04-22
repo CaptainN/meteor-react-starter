@@ -2,8 +2,10 @@
   "name": "meteor-apollo-react-starter",
   "private": true,
   "scripts": {
-    "start": "meteor run",
-    "debug": "meteor run --inspect-brk",
+    "start": "npm run start-full -- --exclude-archs web.browser.legacy",
+    "start-full": "meteor run",
+    "debug": "npm run start -- --inspect-brk",
+    "debug-full": "npm run start-full -- inspect-brk",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
