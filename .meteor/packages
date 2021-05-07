@@ -4,24 +4,24 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-accounts-base@1.6.0
+accounts-base@1.9.0
 accounts-facebook@1.3.2
-accounts-password@1.6.0
+accounts-password@1.7.0
 audit-argument-checks@1.0.7
 browser-policy@1.1.0
 check@1.3.1
-dynamic-import@0.5.2
-ecmascript@0.14.3
+dynamic-import@0.6.0
+ecmascript@0.15.1
 es5-shim@4.8.0
 force-ssl@1.1.0
 meteor-base@1.4.0
-mongo@1.10.0
+mongo@1.11.0
 react-meteor-data@2.0.1
 server-render@0.3.1
 standard-minifier-js@2.6.0
 static-html
 tracker@1.2.0
-typescript
+typescript@4.2.2
 
 alanning:roles@3.2.0
 aldeed:collection2
@@ -30,5 +30,5 @@ fourseven:scss
 ground:db
 npdev:collections
 npdev:react-loadable@1.0.0-beta.3
-seba:minifiers-autoprefixer
+seba:minifiers-autoprefixer@2.0.1
 staringatlights:fast-render
